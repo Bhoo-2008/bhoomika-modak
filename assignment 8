@@ -1,0 +1,56 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int n, i;
+    float distance[100];
+    float *ptr;
+    float *nearest;
+    float limit = 20.0;
+
+    printf("Enter number of robot sensors: ");
+    scanf("%d", &n);
+
+    ptr = distance;
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Enter distance reading of sensor %d (in cm): ", i + 1);
+        scanf("%f", ptr + i);
+    }
+
+    nearest = ptr;
+
+    for(i = 1; i < n; i++)
+    {
+        if(*(ptr + i) < *nearest)
+        {
+            nearest = ptr + i;
+        }
+    }
+
+    printf("\n========== SENSOR READINGS ==========\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("Sensor %d: %.2f cm\n", i + 1, *(ptr + i));
+    }
+
+    printf("\nNearest obstacle distance: %.2f cm\n", *nearest);
+
+    printf("Nearest obstacle detected by sensor: %ld\n",
+           (long)(nearest - ptr) + 1);
+
+    if(*nearest <= limit)
+    {
+        printf("\nWARNING! OBSTACLE IS TOO CLOSE!\n");
+        printf("Robot should stop or avoid the obstacle.\n");
+    }
+    else
+    {
+        printf("\nObstacle is at a safe distance.\n");
+    }
+
+    return 0;
+}
