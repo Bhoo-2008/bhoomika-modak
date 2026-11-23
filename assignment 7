@@ -1,0 +1,72 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int n, i;
+    int robot_id[100];
+    char robot_type[100][50];
+    float payload[100], actual_load[100];
+    float operating_time[100], utilization;
+
+    printf("Enter number of robotic arms: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++)
+    {
+        printf("\nEnter details of Robot %d\n", i + 1);
+
+        printf("Enter Robot ID: ");
+        scanf("%d", &robot_id[i]);
+
+        printf("Enter Robot Type: ");
+        scanf("%49s", robot_type[i]);
+
+        printf("Enter Payload Capacity (kg): ");
+        scanf("%f", &payload[i]);
+
+        printf("Enter Actual Load (kg): ");
+        scanf("%f", &actual_load[i]);
+
+        printf("Enter Operating Time (hours): ");
+        scanf("%f", &operating_time[i]);
+    }
+
+    printf("\n========== ROBOT DETAILS ==========\n");
+
+    for(i = 0; i < n; i++)
+    {
+        printf("\nRobot ID: %d", robot_id[i]);
+        printf("\nRobot Type: %s", robot_type[i]);
+        printf("\nPayload Capacity: %.2f kg", payload[i]);
+        printf("\nActual Load: %.2f kg", actual_load[i]);
+        printf("\nOperating Time: %.2f hours",
+               operating_time[i]);
+
+        if(payload[i] > 0)
+        {
+            utilization =
+                (actual_load[i] / payload[i]) * 100;
+
+            printf("\nLoad Utilization: %.2f%%",
+                   utilization);
+
+            if(actual_load[i] > payload[i])
+            {
+                printf("\nStatus: WARNING! Robot is operating beyond payload capacity.");
+            }
+            else
+            {
+                printf("\nStatus: Within payload capacity.");
+            }
+        }
+        else
+        {
+            printf("\nInvalid payload capacity.");
+        }
+
+        printf("\n-----------------------------------\n");
+    }
+
+    return 0;
+}
